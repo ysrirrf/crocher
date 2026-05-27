@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROCHER | Made with love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Montserrat', sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-black relative">
+
+    <nav class="border-b border-gray-200 sticky top-0 bg-white z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="text-xl font-black tracking-widest uppercase cursor-pointer" onclick="filterCategory('all')">
+                CROC<span class="text-gray-500">HER</span>
+            </div>
+            <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase">
+                <button onclick="filterCategory('all')" id="tab-all" class="text-black underline underline-offset-4 decoration-2">ALL PRODUCTS</button>
+                <button onclick="filterCategory('tas')" id="tab-tas" class="text-gray-400 hover:text-black transition">CARRYWEAR</button>
+                <button onclick="filterCategory('pakaian')" id="tab-pakaian" class="text-gray-400 hover:text-black transition">WEARABLES</button>
+                <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition">BAG CHARMS</button>
+            </div>
+            <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition">
+                Shopping Cart (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </nav>
+
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
+        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+            <h3 class="font-black text-sm tracking-widest uppercase">Keranjang Belanja</h3>
+            <button onclick="toggleCart()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:underline">Tutup [X]</button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
+            <p id="empty-cart-text" class="text-gray-400 text-xs tracking-wider uppercase text-center mt-10">Keranjang kamu masih kosong.</p>
+            </div>
+
+        <div class="p-6 border-t border-gray-200 bg-gray-50">
+            <div class="flex justify-between items-center font-black text-sm tracking-wider uppercase mb-4">
+                <span>Total:</span>
+                <span id="cart-total">Rp 0</span>
+            </div>
+            <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition text-center block">
+                Pre-Order Via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <section class="relative bg-gray-950 h-[60vh] flex items-center justify-center overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1611145367651-6303b46e4040?auto=format&fit=crop&q=80&w=1600" 
+             alt="Premium Crochet Yarn" class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+        <div class="relative w-full max-w-none mx-auto px-8 text-center text-white z-10">
+            <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 drop-shadow-lg">
+                KNITTED WITH JOY, COLORED WITH LOVE.
+            </h1>
+            <p class="text-sm md:text-md tracking-widest uppercase font-bold drop-shadow-md">
+                COLOR YOUR DAY WITH CUTE STITCHES
+            </p>
+        </div>
+    </section>
+
+    <main id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 id="katalog-title" class="text-2xl font-black tracking-tight uppercase mb-8">ALL PRODUCTS</h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
+            
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="tas">
+                <div>
+                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
+                        <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" 
+                             alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Carrywear</div>
+                    <h3 class="font-bold text-sm uppercase mt-1">Wallet</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="font-black text-sm mb-3">Rp 189.000</div>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button onclick="addToCart('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">
+                            + Add To Cart
+                        </button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Wallet." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">
+                            Direct Buy
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="pakaian">
+                <div>
+                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
+                        <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" 
+                             alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Wearables</div>
+                    <h3 class="font-bold text-sm uppercase mt-1">Knit Cardigan</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="font-black text-sm mb-3">Rp 349.000</div>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button onclick="addToCart('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">
+                            + Add To Cart
+                        </button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Knit%20Cardigan." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">
+                            Direct Buy
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
+                <div>
+                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
+                        <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" 
+                             alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
+                    <h3 class="font-bold text-sm uppercase mt-1">Dino Bookmark</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="font-black text-sm mb-3">Rp 125.000</div>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button onclick="addToCart('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">
+                            + Add To Cart
+                        </button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Dino%20Bookmark." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">
+                            Direct Buy
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
+                <div>
+                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
+                        <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" 
+                             alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
+                    <h3 class="font-bold text-sm uppercase mt-1">Flower Keychain</h3>
+                </div>
+                <div class="mt-4">
+                    <div class="font-black text-sm mb-3">Rp 45.000</div>
+                    <div class="grid grid-cols-1 gap-2">
+                        <button onclick="addToCart('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">
+                            + Add To Cart
+                        </button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Flower%20Keychain." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">
+                            Direct Buy
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-black text-white py-8 mt-20 text-center text-xs tracking-widest uppercase">
+        <p>© 2026 CROCHER INDONESIA. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <script>
+        // Array Penampung data belanjaan
+        let cart = [];
+
+        // 1. Fungsi Buka-Tutup Keranjang Belanja
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('translate-x-full');
+        }
+
+        // 2. Fungsi Menambah Produk Ke Keranjang
+        function addToCart(name, price, img) {
+            // Cek apakah barang sudah ada di keranjang
+            const itemIndex = cart.findIndex(item => item.name === name);
+            
+            if (itemIndex > -1) {
+                cart[itemIndex].qty += 1; // kalau sudah ada, tambah jumlahnya
+            } else {
+                cart.push({ name, price, img, qty: 1 }); // kalau belum ada, buat baru
+            }
+            
+            updateCartUI();
+            // Otomatis buka sidebar biar keliatan kalau barang masuk
+            document.getElementById('cart-sidebar').classList.remove('translate-x-full');
+        }
+
+        // 3. Fungsi Hapus Barang dari Keranjang
+        function removeItem(name) {
+            cart = cart.filter(item => item.name !== name);
+            updateCartUI();
+        }
+
+        // 4. Fungsi Mengubah Tampilan Keranjang Belanja secara Real-time
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            const emptyText = document.getElementById('empty-cart-text');
+
+            // Hitung total kuantitas barang
+            let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            cartCount.innerText = totalQty;
+
+            // Bersihkan isi container item sebelum di-render ulang
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.appendChild(emptyText);
+                cartTotal.innerText = "Rp 0";
+                return;
+            }
+
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const subTotal = item.price * item.qty;
+                totalPrice += subTotal;
+
+                const itemHTML = `
+                    <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <img src="${item.img}" class="w-12 h-12 object-cover bg-gray-100 border">
+                            <div>
+                                <h4 class="font-bold text-xs uppercase">${item.name}</h4>
+                                <p class="text-[11px] text-gray-500">${item.qty}x @ Rp ${item.price.toLocaleString('id-ID')}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="block font-black text-xs">Rp ${subTotal.toLocaleString('id-ID')}</span>
+                            <button onclick="removeItem('${item.name}')" class="text-[10px] text-red-500 hover:underline uppercase mt-1">Hapus</button>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.innerHTML += itemHTML;
+            });
+
+            cartTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+        }
+
+        // 5. Otomatisasi Generate Link WhatsApp Sekaligus Banyak Barang
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert('Keranjang belanja kamu masih kosong!');
+                return;
+            }
+
+            let nomorWA = "6285659522540";
+            let teks = "Halo Crocher, saya ingin melakukan Pre-Order barang berikut:\n\n";
+            let totalAkhir = 0;
+
+            cart.forEach((item, index) => {
+                let subTotal = item.price * item.qty;
+                totalAkhir += subTotal;
+                teks += `${index + 1}. *${item.name}* (${item.qty} pcs) = Rp ${subTotal.toLocaleString('id-ID')}\n`;
+            });
+
+            teks += `\n*Total Keseluruhan:* Rp ${totalAkhir.toLocaleString('id-ID')}\n\nMohon info detail metode pembayaran dan estimasi waktu pengerjaannya ya. Terima kasih!`;
+
+            // Encode teks agar aman dibaca url browser
+            let urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`;
+            
+            // Buka tab baru WhatsApp
+            window.open(urlWA, '_blank');
+        }
+
+        // 6. Fungsi Filter Kategori Tab Menu Utama
+        function filterCategory(category) {
+            const products = document.querySelectorAll('.product-item');
+            const title = document.getElementById('katalog-title');
+            
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'flex';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            if(category === 'all') title.innerText = "ALL PRODUCTS";
+            if(category === 'tas') title.innerText = "CARRYWEAR";
+            if(category === 'pakaian') title.innerText = "WEARABLES";
+            if(category === 'aksesoris') title.innerText = "BAG CHARMS";
+
+            const tabs = ['all', 'tas', 'pakaian', 'aksesoris'];
+            tabs.forEach(tab => {
+                const tabElement = document.getElementById(`tab-${tab}`);
+                if (tab === category) {
+                    tabElement.classList.remove('text-gray-400');
+                    tabElement.classList.add('text-black', 'underline', 'underline-offset-4', 'decoration-2');
+                } else {
+                    tabElement.classList.remove('text-black', 'underline', 'underline-offset-4', 'decoration-2');
+                    tabElement.classList.add('text-gray-400');
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
