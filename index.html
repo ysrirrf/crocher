@@ -31,13 +31,13 @@
 
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
         <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
-            <h3 class="font-black text-sm tracking-widest uppercase">Shopping Cart</h3>
+            <h3 class="font-black text-sm tracking-widest uppercase">Shopping Bag</h3>
             <button onclick="toggleCart()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:underline">CLOSE [X]</button>
         </div>
         
         <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
             <p id="empty-cart-text" class="text-gray-400 text-xs tracking-wider uppercase text-center mt-10">Your bag is currently empty.</p>
-            </div>
+        </div>
 
         <div class="p-6 border-t border-gray-200 bg-gray-50">
             <div class="flex justify-between items-center font-black text-sm tracking-wider uppercase mb-4">
@@ -52,8 +52,19 @@
 
     <section class="relative bg-gray-950 h-[60vh] flex items-center justify-center overflow-hidden">
         <img src="https://images.unsplash.com/photo-1611145367651-6303b46e4040?auto=format&fit=crop&q=80&w=1600" 
-             alt="Premium Crochet Yarn" class="absolute inset-0 w-full h-full object-cover opacity-50">
+             alt="Premium Crochet Yarn" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-50">
+        
+        <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&q=80&w=1600" 
+             alt="Knitting Process" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        
+        <img src="https://images.unsplash.com/photo-1584992231908-ebb70e0622c7?auto=format&fit=crop&q=80&w=1600" 
+             alt="Crochet Details" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        
+        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1600" 
+             alt="Cozy Yarn Vibes" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        
         <div class="absolute inset-0 bg-black opacity-40"></div>
+        
         <div class="relative w-full max-w-none mx-auto px-8 text-center text-white z-10">
             <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 drop-shadow-lg">
                 KNITTED WITH JOY, COLORED WITH LOVE.
@@ -176,17 +187,15 @@
 
         // 2. Fungsi Menambah Produk Ke Keranjang
         function addToCart(name, price, img) {
-            // Cek apakah barang sudah ada di keranjang
             const itemIndex = cart.findIndex(item => item.name === name);
             
             if (itemIndex > -1) {
-                cart[itemIndex].qty += 1; // kalau sudah ada, tambah jumlahnya
+                cart[itemIndex].qty += 1;
             } else {
-                cart.push({ name, price, img, qty: 1 }); // kalau belum ada, buat baru
+                cart.push({ name, price, img, qty: 1 });
             }
             
             updateCartUI();
-            // Otomatis buka sidebar biar keliatan kalau barang masuk
             document.getElementById('cart-sidebar').classList.remove('translate-x-full');
         }
 
@@ -203,11 +212,9 @@
             const cartTotal = document.getElementById('cart-total');
             const emptyText = document.getElementById('empty-cart-text');
 
-            // Hitung total kuantitas barang
             let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             cartCount.innerText = totalQty;
 
-            // Bersihkan isi container item sebelum di-render ulang
             cartItemsContainer.innerHTML = '';
 
             if (cart.length === 0) {
@@ -246,7 +253,7 @@
         // 5. Otomatisasi Generate Link WhatsApp Sekaligus Banyak Barang
         function checkoutWhatsApp() {
             if (cart.length === 0) {
-                alert('Keranjang belanja kamu masih kosong!');
+                alert('Your bag is currently empty!');
                 return;
             }
 
@@ -262,10 +269,7 @@
 
             teks += `\n*Total Keseluruhan:* Rp ${totalAkhir.toLocaleString('id-ID')}\n\nMohon info detail metode pembayaran dan estimasi waktu pengerjaannya ya. Terima kasih!`;
 
-            // Encode teks agar aman dibaca url browser
             let urlWA = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`;
-            
-            // Buka tab baru WhatsApp
             window.open(urlWA, '_blank');
         }
 
@@ -299,6 +303,30 @@
                 }
             });
         }
+
+        // ==========================================
+        // LOGIKA AUTOMATIC IMAGE SLIDER
+        // ==========================================
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide-img');
+
+        function startSlider() {
+            setInterval(() => {
+                // 1. Sembunyikan gambar saat ini
+                slides[currentSlide].classList.remove('opacity-50');
+                slides[currentSlide].classList.add('opacity-0');
+
+                // 2. Geser urutan ke gambar berikutnya
+                currentSlide = (currentSlide + 1) % slides.length;
+
+                // 3. Munculkan gambar baru
+                slides[currentSlide].classList.remove('opacity-0');
+                slides[currentSlide].classList.add('opacity-50');
+            }, 4000); // Gambar berganti tiap 4 detik
+        }
+
+        // Jalankan slider setelah halaman selesai dimuat
+        window.addEventListener('DOMContentLoaded', startSlider);
     </script>
 
 </body>
