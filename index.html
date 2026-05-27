@@ -50,21 +50,43 @@
         </div>
     </div>
 
+    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-2xl rounded-sm overflow-hidden shadow-2xl relative flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-black font-bold text-sm z-10 bg-white bg-opacity-80 rounded-full p-1 px-2">
+                ✕
+            </button>
+            <div class="w-full md:w-1/2 bg-gray-100 aspect-square">
+                <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-6 flex flex-col justify-between">
+                <div>
+                    <span id="modal-category" class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Category</span>
+                    <h2 id="modal-title" class="font-black text-xl uppercase mt-1 tracking-tight">Product Name</h2>
+                    <div id="modal-price" class="font-black text-lg text-black mt-2">Rp 0</div>
+                    <hr class="my-4 border-gray-200">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-2">Deskripsi Produk:</h4>
+                    <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed uppercase tracking-wide">
+                        Detail deskripsi produk akan muncul di sini.
+                    </p>
+                </div>
+                <div class="mt-6 grid grid-cols-1 gap-2">
+                    <button id="modal-add-btn" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition">
+                        + Add To Cart
+                    </button>
+                    <a id="modal-buy-btn" href="" target="_blank" class="w-full text-center border-2 border-black text-xs font-bold tracking-widest uppercase py-2.5 hover:bg-black hover:text-white transition">
+                        Direct Buy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="relative bg-gray-950 h-[60vh] flex items-center justify-center overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1611145367651-6303b46e4040?auto=format&fit=crop&q=80&w=1600" 
-             alt="Premium Crochet Yarn" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-50">
-        
-        <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&q=80&w=1600" 
-             alt="Knitting Process" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-        
-        <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?auto=format&fit=crop&q=80&w=1600" 
-             alt="Detailed Crochet Stitches" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-        
-        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1600" 
-             alt="Cozy Yarn Vibes" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
-        
+        <img src="https://images.unsplash.com/photo-1611145367651-6303b46e4040?auto=format&fit=crop&q=80&w=1600" alt="Premium Crochet Yarn" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-50">
+        <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&q=80&w=1600" alt="Knitting Process" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?auto=format&fit=crop&q=80&w=1600" alt="Detailed Crochet Stitches" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1600" alt="Cozy Yarn Vibes" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
         <div class="absolute inset-0 bg-black opacity-40"></div>
-        
         <div class="relative w-full max-w-none mx-auto px-8 text-center text-white z-10">
             <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 drop-shadow-lg">
                 KNITTED WITH JOY, COLORED WITH LOVE.
@@ -81,13 +103,12 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
             
             <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="tas">
-                <div>
+                <div class="cursor-pointer" onclick="openModal('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg', 'Carrywear', 'Dompet rajut mini yang estetik dan dibuat handmade secara presisi. Sangat cocok untuk menyimpan koin, kartu, maupun uang kertas harian Anda.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" 
-                             alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Carrywear</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Wallet</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 group-hover:text-gray-600 transition">Wallet</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 189.000</div>
@@ -103,13 +124,12 @@
             </div>
 
             <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="pakaian">
-                <div>
+                <div class="cursor-pointer" onclick="openModal('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg', 'Wearables', 'Cardigan rajut premium dengan jahitan super rapi dan bahan benang yang lembut di kulit. Memberikan kesan cozy, hangat, sekaligus tetap stylish untuk outfit harian.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" 
-                             alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Wearables</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Knit Cardigan</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 group-hover:text-gray-600 transition">Knit Cardigan</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 349.000</div>
@@ -125,13 +145,12 @@
             </div>
 
             <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
-                <div>
+                <div class="cursor-pointer" onclick="openModal('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg', 'Bag Charms', 'Pembatas buku rajutan berbentuk dinosaurus menggemaskan. Pilihan sempurna untuk menemani waktu membaca Anda atau dijadikan hadiah unik bagi kolektor buku.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" 
-                             alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Dino Bookmark</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 group-hover:text-gray-600 transition">Dino Bookmark</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 125.000</div>
@@ -147,13 +166,12 @@
             </div>
 
             <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
-                <div>
+                <div class="cursor-pointer" onclick="openModal('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg', 'Bag Charms', 'Gantungan kunci berbentuk bunga rajut yang manis dan imut. Dapat digunakan untuk mempercantik tampilan tas harian Anda ataupun sebagai gantungan kunci kendaraan.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" 
-                             alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Flower Keychain</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 group-hover:text-gray-600 transition">Flower Keychain</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 45.000</div>
@@ -178,6 +196,48 @@
     <script>
         let cart = [];
 
+        // ==========================================
+        // LOGIKA MODAL DETAIL PRODUK (TOKOPEDIA STYLE)
+        // ==========================================
+        function openModal(name, price, img, category, description) {
+            document.getElementById('modal-title').innerText = name;
+            document.getElementById('modal-price').innerText = `Rp ${price.toLocaleString('id-ID')}`;
+            document.getElementById('modal-img').src = img;
+            document.getElementById('modal-img').alt = name;
+            document.getElementById('modal-category').innerText = category;
+            document.getElementById('modal-desc').innerText = description;
+
+            // Memasang fungsi tombol Add To Cart pada Modal
+            const addBtn = document.getElementById('modal-add-btn');
+            addBtn.onclick = function() {
+                addToCart(name, price, img);
+                closeModal();
+            };
+
+            // Memasang link WhatsApp Direct Buy pada Modal
+            const buyBtn = document.getElementById('modal-buy-btn');
+            let textWA = encodeURIComponent(`Halo Crocher, saya tertarik untuk pre-order ${name}.`);
+            buyBtn.href = `https://wa.me/6285659522540?text=${textWA}`;
+
+            // Menampilkan Modal
+            document.getElementById('product-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').classList.add('hidden');
+        }
+
+        // Close modal jika pengguna mengklik area luar box modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('product-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ==========================================
+        // LOGIKA TRADISIONAL CART & FITUR SEBELUMNYA
+        // ==========================================
         function toggleCart() {
             const sidebar = document.getElementById('cart-sidebar');
             sidebar.classList.toggle('translate-x-full');
@@ -305,17 +365,12 @@
 
         function startSlider() {
             setInterval(() => {
-                // 1. Sembunyikan gambar saat ini
                 slides[currentSlide].classList.remove('opacity-50');
                 slides[currentSlide].classList.add('opacity-0');
-
-                // 2. Geser urutan ke gambar berikutnya
                 currentSlide = (currentSlide + 1) % slides.length;
-
-                // 3. Munculkan gambar baru
                 slides[currentSlide].classList.remove('opacity-0');
                 slides[currentSlide].classList.add('opacity-50');
-            }, 1750); // Berganti otomatis dengan lancar
+            }, 1750);
         }
 
         window.addEventListener('DOMContentLoaded', startSlider);
