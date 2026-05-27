@@ -57,8 +57,8 @@
         <img src="https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&q=80&w=1600" 
              alt="Knitting Process" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
         
-        <img src="https://images.unsplash.com/photo-1584992231908-ebb70e0622c7?auto=format&fit=crop&q=80&w=1600" 
-             alt="Crochet Details" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
+        <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?auto=format&fit=crop&q=80&w=1600" 
+             alt="Detailed Crochet Stitches" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
         
         <img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1600" 
              alt="Cozy Yarn Vibes" class="slide-img absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 opacity-0">
@@ -176,16 +176,13 @@
     </footer>
 
     <script>
-        // Array Penampung data belanjaan
         let cart = [];
 
-        // 1. Fungsi Buka-CLOSE Keranjang Belanja
         function toggleCart() {
             const sidebar = document.getElementById('cart-sidebar');
             sidebar.classList.toggle('translate-x-full');
         }
 
-        // 2. Fungsi Menambah Produk Ke Keranjang
         function addToCart(name, price, img) {
             const itemIndex = cart.findIndex(item => item.name === name);
             
@@ -199,13 +196,11 @@
             document.getElementById('cart-sidebar').classList.remove('translate-x-full');
         }
 
-        // 3. Fungsi Hapus Barang dari Keranjang
         function removeItem(name) {
             cart = cart.filter(item => item.name !== name);
             updateCartUI();
         }
 
-        // 4. Fungsi Mengubah Tampilan Keranjang Belanja secara Real-time
         function updateCartUI() {
             const cartItemsContainer = document.getElementById('cart-items');
             const cartCount = document.getElementById('cart-count');
@@ -250,7 +245,6 @@
             cartTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
         }
 
-        // 5. Otomatisasi Generate Link WhatsApp Sekaligus Banyak Barang
         function checkoutWhatsApp() {
             if (cart.length === 0) {
                 alert('Your bag is currently empty!');
@@ -273,7 +267,6 @@
             window.open(urlWA, '_blank');
         }
 
-        // 6. Fungsi Filter Kategori Tab Menu Utama
         function filterCategory(category) {
             const products = document.querySelectorAll('.product-item');
             const title = document.getElementById('katalog-title');
@@ -322,10 +315,9 @@
                 // 3. Munculkan gambar baru
                 slides[currentSlide].classList.remove('opacity-0');
                 slides[currentSlide].classList.add('opacity-50');
-            }, 2500); // Gambar berganti tiap 4 detik
+            }, 2500); // Berganti otomatis dengan lancar
         }
 
-        // Jalankan slider setelah halaman selesai dimuat
         window.addEventListener('DOMContentLoaded', startSlider);
     </script>
 
