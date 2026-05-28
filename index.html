@@ -40,11 +40,26 @@
                     </div>
                 </div>
 
-                <button onclick="triggerMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1">
+                <button onclick="openMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </button>
+
+                <div id="mobile-search-overlay" class="fixed inset-x-0 top-0 bg-white h-16 px-4 hidden flex items-center justify-between gap-3 border-b border-gray-200 z-50 md:hidden">
+                    <div class="flex-1 relative">
+                        <input type="text" id="search-input-mobile" oninput="searchProducts('mobile')" placeholder="SEARCH PRODUCT..." 
+                            class="w-full bg-gray-100 text-xs font-bold uppercase tracking-wider pl-10 pr-4 py-2.5 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
+                        <div class="absolute left-3 top-3 text-gray-400 pointer-events-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <button onclick="closeMobileSearch()" class="text-sm font-bold text-black p-1 hover:text-gray-600 transition focus:outline-none">
+                        ✕
+                    </button>
+                </div>
             </div>
 
             <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition shrink-0">
@@ -202,7 +217,7 @@
     <script>
         let cart = [];
         let currentCategory = 'all';
-        let currentSearchQuery = ''; // Menyimpan kata kunci pencarian global
+        let currentSearchQuery = '';
 
         function openModal(name, price, img, category, description) {
             document.getElementById('modal-title').innerText = name;
@@ -232,6 +247,7 @@
             if (event.target === modal) closeModal();
         }
 
+        // Buka-Tutup Cart Sidebar
         function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
 
         function addToCart(name, price, img) {
@@ -310,7 +326,7 @@
             window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`, '_blank');
         }
 
-        // FUNGSI UTAMA BARU: Menggabungkan Filter Kategori & Kata Kunci Pencarian
+        // FUNGSI UTAMA FILTER & PENCERIAN REAL-TIME
         function applyFilterAndSearch() {
             const products = document.querySelectorAll('.product-item');
             const emptyMsg = document.getElementById('search-empty-msg');
@@ -338,21 +354,29 @@
             }
         }
 
-        // Dipanggil setiap kali user mengetik sesuatu di search bar desktop
         function searchProducts(type) {
             if (type === 'desktop') {
                 currentSearchQuery = document.getElementById('search-input-desktop').value.toLowerCase().trim();
+            } else if (type === 'mobile') {
+                currentSearchQuery = document.getElementById('search-input-mobile').value.toLowerCase().trim();
             }
             applyFilterAndSearch();
         }
 
-        // Fungsi pemicu pencarian untuk pengguna perangkat mobile via Prompt Pop-up
-        function triggerMobileSearch() {
-            let mobileQuery = prompt("Search product:", currentSearchQuery);
-            if (mobileQuery !== null) {
-                currentSearchQuery = mobileQuery.toLowerCase().trim();
-                applyFilterAndSearch();
-            }
+        // KENDALI OVERLAY PENCARIAN MOBILE BARU (MENGGANTIKAN PROMPT BROWSER)
+        function openMobileSearch() {
+            const overlay = document.getElementById('mobile-search-overlay');
+            const inputMobile = document.getElementById('search-input-mobile');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            inputMobile.value = currentSearchQuery; 
+            inputMobile.focus();
+        }
+
+        function closeMobileSearch() {
+            const overlay = document.getElementById('mobile-search-overlay');
+            overlay.classList.remove('flex');
+            overlay.classList.add('hidden');
         }
 
         function filterCategory(category) {
@@ -381,8 +405,11 @@
 
         function resetFilters() {
             const desktopInput = document.getElementById('search-input-desktop');
+            const mobileInput = document.getElementById('search-input-mobile');
             if (desktopInput) desktopInput.value = '';
+            if (mobileInput) mobileInput.value = '';
             currentSearchQuery = '';
+            closeMobileSearch();
             filterCategory('all');
         }
 
