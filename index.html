@@ -16,20 +16,31 @@
 <body class="bg-white text-black relative">
 
     <nav class="border-b border-gray-200 sticky top-0 bg-white z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="text-xl font-black tracking-widest uppercase cursor-pointer" onclick="filterCategory('all')">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <div class="text-xl font-black tracking-widest uppercase cursor-pointer shrink-0" onclick="resetFilters()">
                 CROC<span class="text-gray-500">HER</span>
             </div>
             
-            <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase">
+            <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase shrink-0">
                 <button onclick="filterCategory('all')" id="tab-all" class="text-black underline underline-offset-4 decoration-2">ALL PRODUCTS</button>
                 <button onclick="filterCategory('tas')" id="tab-tas" class="text-gray-400 hover:text-black transition">CARRYWEAR</button>
                 <button onclick="filterCategory('pakaian')" id="tab-pakaian" class="text-gray-400 hover:text-black transition">WEARABLES</button>
                 <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition">BAG CHARMS</button>
             </div>
             
-            <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition">
-                Shopping Cart (<span id="cart-count">0</span>)
+            <div class="flex-1 max-w-xs relative">
+                <input type="text" id="search-input" oninput="searchProducts()" placeholder="Search product..." 
+                    class="w-full bg-gray-100 text-xs font-medium uppercase tracking-wider pl-3 pr-10 py-2 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
+                <div class="absolute right-3 top-2.5 text-gray-400 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+
+            <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition shrink-0">
+                Shopping Bag (<span id="cart-count">0</span>)
             </button>
         </div>
 
@@ -98,17 +109,20 @@
     </section>
 
     <main id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 id="katalog-title" class="text-2xl font-black tracking-tight uppercase mb-8">ALL PRODUCTS</h2>
+        <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+            <h2 id="katalog-title" class="text-2xl font-black tracking-tight uppercase">ALL PRODUCTS</h2>
+            <p id="search-empty-msg" class="text-xs font-bold text-red-500 uppercase tracking-widest hidden">Produk tidak ditemukan</p>
+        </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8" id="product-grid">
             
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="tas">
-                <div class="cursor-pointer" onclick="openModal('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg', 'Carrywear', 'Dompet rajut mini yang estetik dan dibuat handmade secara presisi. Sangat cocok untuk menyimpan koin, kartu, maupun uang kertas harian Anda.')">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="tas" data-name="wallet">
+                <div class="cursor-pointer" onclick="openModal('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg', 'Carrywear', 'Dompet rajut mini yang estetik dan dibuat handmade secara presisi.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
                         <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Carrywear</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Wallet</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Wallet</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 189.000</div>
@@ -119,13 +133,13 @@
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="pakaian">
-                <div class="cursor-pointer" onclick="openModal('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg', 'Wearables', 'Cardigan rajut premium dengan jahitan super rapi dan bahan benang yang lembut di kulit. Memberikan kesan cozy, hangat, sekaligus tetap stylish untuk outfit harian.')">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="pakaian" data-name="knit cardigan">
+                <div class="cursor-pointer" onclick="openModal('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg', 'Wearables', 'Cardigan rajut premium dengan jahitan super rapi.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
                         <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Wearables</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Knit Cardigan</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Knit Cardigan</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 349.000</div>
@@ -136,13 +150,13 @@
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
-                <div class="cursor-pointer" onclick="openModal('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg', 'Bag Charms', 'Pembatas buku rajutan berbentuk dinosaurus menggemaskan. Pilihan sempurna untuk menemani waktu membaca Anda atau dijadikan hadiah unik bagi kolektor buku.')">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris" data-name="dino bookmark">
+                <div class="cursor-pointer" onclick="openModal('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg', 'Bag Charms', 'Pembatas buku rajutan berbentuk dinosaurus menggemaskan.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
                         <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Dino Bookmark</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Dino Bookmark</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 125.000</div>
@@ -153,13 +167,13 @@
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris">
-                <div class="cursor-pointer" onclick="openModal('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg', 'Bag Charms', 'Gantungan kunci berbentuk bunga rajut yang manis dan imut. Dapat digunakan untuk mempercantik tampilan tas harian Anda ataupun sebagai gantungan kunci kendaraan.')">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris" data-name="flower keychain">
+                <div class="cursor-pointer" onclick="openModal('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg', 'Bag Charms', 'Gantungan kunci berbentuk bunga rajut yang manis dan imut.')">
                     <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
                         <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1">Flower Keychain</h3>
+                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Flower Keychain</h3>
                 </div>
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 45.000</div>
@@ -179,6 +193,8 @@
 
     <script>
         let cart = [];
+        // Variabel global untuk merekam kategori aktif saat ini
+        let currentCategory = 'all';
 
         function openModal(name, price, img, category, description) {
             document.getElementById('modal-title').innerText = name;
@@ -201,18 +217,14 @@
             document.getElementById('product-modal').classList.remove('hidden');
         }
 
-        function closeModal() {
-            document.getElementById('product-modal').classList.add('hidden');
-        }
+        function closeModal() { document.getElementById('product-modal').classList.add('hidden'); }
 
         window.onclick = function(event) {
             const modal = document.getElementById('product-modal');
             if (event.target === modal) closeModal();
         }
 
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
-        }
+        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
 
         function addToCart(name, price, img) {
             const itemIndex = cart.findIndex(item => item.name === name);
@@ -290,43 +302,77 @@
             window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`, '_blank');
         }
 
-        // PERUBAHAN FUNGSI FILTER: Sinkronisasi Tab Desktop & Mobile
-        function filterCategory(category) {
+        // FUNGSI UTAMA BARU: Menggabungkan Filter Kategori & Kata Kunci Pencarian
+        function applyFilterAndSearch() {
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
             const products = document.querySelectorAll('.product-item');
-            const title = document.getElementById('katalog-title');
-            
+            const emptyMsg = document.getElementById('search-empty-msg');
+            let visibleCount = 0;
+
             products.forEach(product => {
-                if (category === 'all' || product.getAttribute('data-category') === category) {
+                const productCategory = product.getAttribute('data-category');
+                const productName = product.getAttribute('data-name').toLowerCase();
+                
+                // Cek apakah produk sesuai dengan kategori aktif DAN query pencarian
+                const matchesCategory = (currentCategory === 'all' || productCategory === currentCategory);
+                const matchesSearch = productName.includes(searchQuery);
+
+                if (matchesCategory && matchesSearch) {
                     product.style.display = 'flex';
+                    visibleCount++;
                 } else {
                     product.style.display = 'none';
                 }
             });
 
-            // Perubahan teks judul katalog
+            // Tampilkan pesan eror jika tidak ada barang yang lolos filter pencarian
+            if (visibleCount === 0) {
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+            }
+        }
+
+        // Dipanggil setiap kali user mengetik sesuatu di search bar
+        function searchProducts() {
+            applyFilterAndSearch();
+        }
+
+        // Ubah Fungsi Filter Kategori agar merekam state global kategori
+        function filterCategory(category) {
+            currentCategory = category;
+            const title = document.getElementById('katalog-title');
+
+            // Perubahan teks judul katalog utama
             const titles = { 'all': 'ALL PRODUCTS', 'tas': 'CARRYWEAR', 'pakaian': 'WEARABLES', 'aksesoris': 'BAG CHARMS' };
             title.innerText = titles[category] || "ALL PRODUCTS";
 
-            // Update Style Aktif pada Tab Desktop & Mobile
+            // Update Style Aktif-Tidak Aktif pada Tab Menu (Desktop & Mobile)
             const tabs = ['all', 'tas', 'pakaian', 'aksesoris'];
             tabs.forEach(tab => {
                 const dTab = document.getElementById(`tab-${tab}`);
                 const mTab = document.getElementById(`mobile-tab-${tab}`);
                 
                 if (tab === category) {
-                    // Desktop Active
                     dTab.className = "text-black underline underline-offset-4 decoration-2";
-                    // Mobile Active
                     mTab.className = "text-black border-b-2 border-black pb-1 whitespace-nowrap";
                 } else {
-                    // Desktop Inactive
                     dTab.className = "text-gray-400 hover:text-black transition";
-                    // Mobile Inactive
                     mTab.className = "text-gray-400 hover:text-black pb-1 whitespace-nowrap";
                 }
             });
+
+            // Jalankan fungsi filter gabungan
+            applyFilterAndSearch();
         }
 
+        // Klik logo untuk meriset seluruh pencarian & filter ke kondisi awal
+        function resetFilters() {
+            document.getElementById('search-input').value = '';
+            filterCategory('all');
+        }
+
+        // HERO BANNER CAROUSEL AUTOMATION
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide-img');
         function startSlider() {
