@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CROCHER | Made with love</title>
     
-    <link rel="icon" type="image/png" href="http://googleusercontent.com/profile/picture/2">
+    <link rel="icon" type="image/png" href="http://googleusercontent.com/profile/picture/3">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -424,6 +424,7 @@
             applyFilterAndSearch();
         }
 
+        // UPDATE: Ditambahkan perintah location.reload() agar halaman ter-refresh total
         function resetFilters() {
             const desktopInput = document.getElementById('search-input-desktop');
             const mobileInput = document.getElementById('search-input-mobile');
@@ -432,6 +433,7 @@
             currentSearchQuery = '';
             closeMobileSearch();
             filterCategory('all');
+            location.reload(); 
         }
 
         let currentSlide = 0;
