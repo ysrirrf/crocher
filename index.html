@@ -29,18 +29,26 @@
                 <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition">BAG CHARMS</button>
             </div>
             
-            <div class="flex-1 max-w-xs relative">
-                <input type="text" id="search-input" oninput="searchProducts()" placeholder="Search product..." 
-                    class="w-full bg-gray-100 text-xs font-medium uppercase tracking-wider pl-3 pr-10 py-2 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
-                <div class="absolute right-3 top-2.5 text-gray-400 pointer-events-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div class="flex-1 max-w-xs relative flex justify-end">
+                <div class="hidden md:block w-full relative">
+                    <input type="text" id="search-input-desktop" oninput="searchProducts('desktop')" placeholder="Search product..." 
+                        class="w-full bg-gray-100 text-xs font-medium uppercase tracking-wider pl-3 pr-10 py-2 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
+                    <div class="absolute right-3 top-2.5 text-gray-400 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+
+                <button onclick="triggerMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
-                </div>
+                </button>
             </div>
 
             <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition shrink-0">
-                Shopping Bag (<span id="cart-count">0</span>)
+                Shopping Cart (<span id="cart-count">0</span>)
             </button>
         </div>
 
@@ -193,8 +201,8 @@
 
     <script>
         let cart = [];
-        // Variabel global untuk merekam kategori aktif saat ini
         let currentCategory = 'all';
+        let currentSearchQuery = ''; // Menyimpan kata kunci pencarian global
 
         function openModal(name, price, img, category, description) {
             document.getElementById('modal-title').innerText = name;
@@ -285,7 +293,7 @@
 
         function checkoutWhatsApp() {
             if (cart.length === 0) {
-                alert('Your bag is currently empty!');
+                alert('Your cart is currently empty!');
                 return;
             }
             let nomorWA = "6285659522540";
@@ -304,7 +312,6 @@
 
         // FUNGSI UTAMA BARU: Menggabungkan Filter Kategori & Kata Kunci Pencarian
         function applyFilterAndSearch() {
-            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
             const products = document.querySelectorAll('.product-item');
             const emptyMsg = document.getElementById('search-empty-msg');
             let visibleCount = 0;
@@ -313,9 +320,8 @@
                 const productCategory = product.getAttribute('data-category');
                 const productName = product.getAttribute('data-name').toLowerCase();
                 
-                // Cek apakah produk sesuai dengan kategori aktif DAN query pencarian
                 const matchesCategory = (currentCategory === 'all' || productCategory === currentCategory);
-                const matchesSearch = productName.includes(searchQuery);
+                const matchesSearch = productName.includes(currentSearchQuery);
 
                 if (matchesCategory && matchesSearch) {
                     product.style.display = 'flex';
@@ -325,7 +331,6 @@
                 }
             });
 
-            // Tampilkan pesan eror jika tidak ada barang yang lolos filter pencarian
             if (visibleCount === 0) {
                 emptyMsg.classList.remove('hidden');
             } else {
@@ -333,21 +338,30 @@
             }
         }
 
-        // Dipanggil setiap kali user mengetik sesuatu di search bar
-        function searchProducts() {
+        // Dipanggil setiap kali user mengetik sesuatu di search bar desktop
+        function searchProducts(type) {
+            if (type === 'desktop') {
+                currentSearchQuery = document.getElementById('search-input-desktop').value.toLowerCase().trim();
+            }
             applyFilterAndSearch();
         }
 
-        // Ubah Fungsi Filter Kategori agar merekam state global kategori
+        // Fungsi pemicu pencarian untuk pengguna perangkat mobile via Prompt Pop-up
+        function triggerMobileSearch() {
+            let mobileQuery = prompt("Search product:", currentSearchQuery);
+            if (mobileQuery !== null) {
+                currentSearchQuery = mobileQuery.toLowerCase().trim();
+                applyFilterAndSearch();
+            }
+        }
+
         function filterCategory(category) {
             currentCategory = category;
             const title = document.getElementById('katalog-title');
 
-            // Perubahan teks judul katalog utama
             const titles = { 'all': 'ALL PRODUCTS', 'tas': 'CARRYWEAR', 'pakaian': 'WEARABLES', 'aksesoris': 'BAG CHARMS' };
             title.innerText = titles[category] || "ALL PRODUCTS";
 
-            // Update Style Aktif-Tidak Aktif pada Tab Menu (Desktop & Mobile)
             const tabs = ['all', 'tas', 'pakaian', 'aksesoris'];
             tabs.forEach(tab => {
                 const dTab = document.getElementById(`tab-${tab}`);
@@ -362,17 +376,16 @@
                 }
             });
 
-            // Jalankan fungsi filter gabungan
             applyFilterAndSearch();
         }
 
-        // Klik logo untuk meriset seluruh pencarian & filter ke kondisi awal
         function resetFilters() {
-            document.getElementById('search-input').value = '';
+            const desktopInput = document.getElementById('search-input-desktop');
+            if (desktopInput) desktopInput.value = '';
+            currentSearchQuery = '';
             filterCategory('all');
         }
 
-        // HERO BANNER CAROUSEL AUTOMATION
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide-img');
         function startSlider() {
