@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CROCHER | Made with love</title>
     
-    <link rel="icon" type="image/png" href="images/Crocher Project.png">
+    <link rel="icon" type="image/png" href="images/Crocher%20Project.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     <nav class="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-md z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
-            <div class="text-xl font-black tracking-widest uppercase cursor-pointer shrink-0 transition hover:opacity-70" onclick="window.location.reload();">
+            <div class="text-xl font-black tracking-widest uppercase cursor-pointer shrink-0 transition hover:opacity-70" onclick="resetFilters()">
                 CROC<span class="text-gray-500">HER</span>
             </div>
             
@@ -310,7 +310,6 @@
                 const subTotal = item.price * item.qty;
                 totalPrice += subTotal;
 
-                // UI di dalam Shopping Bag menggunakan normal text agar terlihat luxury & bersih
                 const itemHTML = `
                     <div class="flex items-center justify-between border-b border-gray-50 pb-3.5">
                         <div class="flex items-center space-x-3">
@@ -423,6 +422,16 @@
             });
 
             applyFilterAndSearch();
+        }
+
+        function resetFilters() {
+            const desktopInput = document.getElementById('search-input-desktop');
+            const mobileInput = document.getElementById('search-input-mobile');
+            if (desktopInput) desktopInput.value = '';
+            if (mobileInput) mobileInput.value = '';
+            currentSearchQuery = '';
+            closeMobileSearch();
+            filterCategory('all');
         }
 
         let currentSlide = 0;
