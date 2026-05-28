@@ -29,7 +29,8 @@
                 <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition">BAG CHARMS</button>
             </div>
             
-            <div class="flex-1 max-w-xs relative flex justify-end">
+            <div class="flex items-center justify-end gap-2 sm:gap-4 flex-1 md:flex-initial md:w-64">
+                
                 <div class="hidden md:block w-full relative">
                     <input type="text" id="search-input-desktop" oninput="searchProducts('desktop')" placeholder="Search product..." 
                         class="w-full bg-gray-100 text-xs font-medium uppercase tracking-wider pl-3 pr-10 py-2 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
@@ -40,31 +41,37 @@
                     </div>
                 </div>
 
-                <button onclick="openMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1">
+                <button onclick="openMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1.5 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </button>
 
-                <div id="mobile-search-overlay" class="fixed inset-x-0 top-0 bg-white h-16 px-4 hidden flex items-center justify-between gap-3 border-b border-gray-200 z-50 md:hidden">
-                    <div class="flex-1 relative">
-                        <input type="text" id="search-input-mobile" oninput="searchProducts('mobile')" placeholder="SEARCH PRODUCT..." 
-                            class="w-full bg-gray-100 text-xs font-bold uppercase tracking-wider pl-10 pr-4 py-2.5 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
-                        <div class="absolute left-3 top-3 text-gray-400 pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
-                        </div>
-                    </div>
-                    <button onclick="closeMobileSearch()" class="text-sm font-bold text-black p-1 hover:text-gray-600 transition focus:outline-none">
-                        ✕
-                    </button>
-                </div>
+                <button onclick="toggleBag()" class="relative text-black hover:text-gray-600 focus:outline-none p-1.5 shrink-0 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span id="bag-count" class="absolute top-0 right-0 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center tracking-tighter">
+                        0
+                    </span>
+                </button>
             </div>
 
-            <button onclick="toggleCart()" class="font-bold text-xs tracking-wider uppercase border border-black px-3 py-1.5 hover:bg-black hover:text-white transition shrink-0">
-                Shopping Cart (<span id="cart-count">0</span>)
-            </button>
+            <div id="mobile-search-overlay" class="fixed inset-x-0 top-0 bg-white h-16 px-4 hidden flex items-center justify-between gap-3 border-b border-gray-200 z-50 md:hidden">
+                <div class="flex-1 relative">
+                    <input type="text" id="search-input-mobile" oninput="searchProducts('mobile')" placeholder="SEARCH PRODUCT..." 
+                        class="w-full bg-gray-100 text-xs font-bold uppercase tracking-wider pl-10 pr-4 py-2.5 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
+                    <div class="absolute left-3 top-3 text-gray-400 pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
+                <button onclick="closeMobileSearch()" class="text-sm font-bold text-black p-1 hover:text-gray-600 transition focus:outline-none">
+                    ✕
+                </button>
+            </div>
+
         </div>
 
         <div class="md:hidden flex space-x-6 overflow-x-auto px-4 py-3 bg-gray-50 border-t border-gray-100 no-scrollbar font-bold text-[10px] tracking-wider uppercase">
@@ -75,20 +82,20 @@
         </div>
     </nav>
 
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
+    <div id="bag-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
         <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
-            <h3 class="font-black text-sm tracking-widest uppercase">Shopping Cart</h3>
-            <button onclick="toggleCart()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:underline">CLOSE [X]</button>
+            <h3 class="font-black text-sm tracking-widest uppercase">Shopping Bag</h3>
+            <button onclick="toggleBag()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:underline">CLOSE [X]</button>
         </div>
         
-        <div id="cart-items" class="flex-1 p-6 overflow-y-auto space-y-4">
-            <p id="empty-cart-text" class="text-gray-400 text-xs tracking-wider uppercase text-center mt-10">Your cart is currently empty.</p>
+        <div id="bag-items" class="flex-1 p-6 overflow-y-auto space-y-4">
+            <p id="empty-bag-text" class="text-gray-400 text-xs tracking-wider uppercase text-center mt-10">Your bag is currently empty.</p>
         </div>
 
         <div class="p-6 border-t border-gray-200 bg-gray-50">
             <div class="flex justify-between items-center font-black text-sm tracking-wider uppercase mb-4">
                 <span>Total:</span>
-                <span id="cart-total">Rp 0</span>
+                <span id="bag-total">Rp 0</span>
             </div>
             <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition text-center block">
                 Pre-Order Via WhatsApp
@@ -112,7 +119,7 @@
                     <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed uppercase tracking-wide">Detail deskripsi produk.</p>
                 </div>
                 <div class="mt-6 grid grid-cols-1 gap-2">
-                    <button id="modal-add-btn" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition">+ Add To Cart</button>
+                    <button id="modal-add-btn" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition">+ Add To Bag</button>
                     <a id="modal-buy-btn" href="" target="_blank" class="w-full text-center border-2 border-black text-xs font-bold tracking-widest uppercase py-2.5 hover:bg-black hover:text-white transition">Direct Buy</a>
                 </div>
             </div>
@@ -150,7 +157,7 @@
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 189.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToCart('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Cart</button>
+                        <button onclick="addToBag('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
                         <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Wallet." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
                     </div>
                 </div>
@@ -167,7 +174,7 @@
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 349.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToCart('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Cart</button>
+                        <button onclick="addToBag('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
                         <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Knit%20Cardigan." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
                     </div>
                 </div>
@@ -184,7 +191,7 @@
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 125.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToCart('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Cart</button>
+                        <button onclick="addToBag('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
                         <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Dino%20Bookmark." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
                     </div>
                 </div>
@@ -201,7 +208,7 @@
                 <div class="mt-4">
                     <div class="font-black text-sm mb-3">Rp 45.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToCart('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Cart</button>
+                        <button onclick="addToBag('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
                         <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Flower%20Keychain." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
                     </div>
                 </div>
@@ -215,7 +222,7 @@
     </footer>
 
     <script>
-        let cart = [];
+        let bag = [];
         let currentCategory = 'all';
         let currentSearchQuery = '';
 
@@ -229,7 +236,7 @@
 
             const addBtn = document.getElementById('modal-add-btn');
             addBtn.onclick = function() {
-                addToCart(name, price, img);
+                addToBag(name, price, img);
                 closeModal();
             };
 
@@ -247,43 +254,43 @@
             if (event.target === modal) closeModal();
         }
 
-        // Buka-Tutup Cart Sidebar
-        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('translate-x-full'); }
+        function toggleBag() { document.getElementById('bag-sidebar').classList.toggle('translate-x-full'); }
 
-        function addToCart(name, price, img) {
-            const itemIndex = cart.findIndex(item => item.name === name);
+        function addToBag(name, price, img) {
+            const itemIndex = bag.findIndex(item => item.name === name);
             if (itemIndex > -1) {
-                cart[itemIndex].qty += 1;
+                bag[itemIndex].qty += 1;
             } else {
-                cart.push({ name, price, img, qty: 1 });
+                bag.push({ name, price, img, qty: 1 });
             }
-            updateCartUI();
-            document.getElementById('cart-sidebar').classList.remove('translate-x-full');
+            updateBagUI();
+            document.getElementById('bag-sidebar').classList.remove('translate-x-full');
         }
 
         function removeItem(name) {
-            cart = cart.filter(item => item.name !== name);
-            updateCartUI();
+            bag = bag.filter(item => item.name !== name);
+            updateBagUI();
         }
 
-        function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartCount = document.getElementById('cart-count');
-            const cartTotal = document.getElementById('cart-total');
-            const emptyText = document.getElementById('empty-cart-text');
+        function updateBagUI() {
+            const bagItemsContainer = document.getElementById('bag-items');
+            const bagCount = document.getElementById('bag-count');
+            const bagTotal = document.getElementById('bag-total');
+            const emptyText = document.getElementById('empty-bag-text');
 
-            let totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            cartCount.innerText = totalQty;
-            cartItemsContainer.innerHTML = '';
+            let totalQty = bag.reduce((sum, item) => sum + item.qty, 0);
+            
+            bagCount.innerText = totalQty;
+            bagItemsContainer.innerHTML = '';
 
-            if (cart.length === 0) {
-                cartItemsContainer.appendChild(emptyText);
-                cartTotal.innerText = "Rp 0";
+            if (bag.length === 0) {
+                bagItemsContainer.appendChild(emptyText);
+                bagTotal.innerText = "Rp 0";
                 return;
             }
 
             let totalPrice = 0;
-            cart.forEach(item => {
+            bag.forEach(item => {
                 const subTotal = item.price * item.qty;
                 totalPrice += subTotal;
 
@@ -302,21 +309,21 @@
                         </div>
                     </div>
                 `;
-                cartItemsContainer.innerHTML += itemHTML;
+                bagItemsContainer.innerHTML += itemHTML;
             });
-            cartTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+            bagTotal.innerText = `Rp ${totalPrice.toLocaleString('id-ID')}`;
         }
 
         function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                alert('Your cart is currently empty!');
+            if (bag.length === 0) {
+                alert('Your bag is currently empty!');
                 return;
             }
             let nomorWA = "6285659522540";
             let teks = "Halo Crocher, saya ingin melakukan Pre-Order barang berikut:\n\n";
             let totalAkhir = 0;
 
-            cart.forEach((item, index) => {
+            bag.forEach((item, index) => {
                 let subTotal = item.price * item.qty;
                 totalAkhir += subTotal;
                 teks += `${index + 1}. *${item.name}* (${item.qty} pcs) = Rp ${subTotal.toLocaleString('id-ID')}\n`;
@@ -326,7 +333,6 @@
             window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`, '_blank');
         }
 
-        // FUNGSI UTAMA FILTER & PENCERIAN REAL-TIME
         function applyFilterAndSearch() {
             const products = document.querySelectorAll('.product-item');
             const emptyMsg = document.getElementById('search-empty-msg');
@@ -363,7 +369,6 @@
             applyFilterAndSearch();
         }
 
-        // KENDALI OVERLAY PENCARIAN MOBILE BARU (MENGGANTIKAN PROMPT BROWSER)
         function openMobileSearch() {
             const overlay = document.getElementById('mobile-search-overlay');
             const inputMobile = document.getElementById('search-input-mobile');
