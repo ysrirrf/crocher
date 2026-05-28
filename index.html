@@ -24,11 +24,13 @@
                 CROC<span class="text-gray-500">HER</span>
             </div>
             
-            <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase shrink-0">
+            <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase shrink-0 items-center">
                 <button onclick="filterCategory('all')" id="tab-all" class="text-black underline underline-offset-4 decoration-2 transition duration-300">ALL PRODUCTS</button>
                 <button onclick="filterCategory('tas')" id="tab-tas" class="text-gray-400 hover:text-black transition duration-300">CARRYWEAR</button>
                 <button onclick="filterCategory('pakaian')" id="tab-pakaian" class="text-gray-400 hover:text-black transition duration-300">WEARABLES</button>
                 <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition duration-300">BAG CHARMS</button>
+                
+                <a href="about.html" class="text-gray-400 hover:text-black transition duration-300">ABOUT</a>
             </div>
             
             <div class="flex items-center justify-end gap-2 sm:gap-4 flex-1 md:flex-initial md:w-64">
@@ -76,11 +78,13 @@
 
         </div>
 
-        <div class="md:hidden flex space-x-6 overflow-x-auto px-4 py-3 bg-gray-50/50 border-t border-gray-100 no-scrollbar font-bold text-[10px] tracking-wider uppercase">
+        <div class="md:hidden flex space-x-6 overflow-x-auto px-4 py-3 bg-gray-50/50 border-t border-gray-100 no-scrollbar font-bold text-[10px] tracking-wider uppercase items-center">
             <button onclick="filterCategory('all')" id="mobile-tab-all" class="text-black border-b-2 border-black pb-1 whitespace-nowrap transition duration-300">ALL PRODUCTS</button>
             <button onclick="filterCategory('tas')" id="mobile-tab-tas" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">CARRYWEAR</button>
             <button onclick="filterCategory('pakaian')" id="mobile-tab-pakaian" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">WEARABLES</button>
             <button onclick="filterCategory('aksesoris')" id="mobile-tab-aksesoris" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">BAG CHARMS</button>
+            
+            <a href="about.html" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">ABOUT</a>
         </div>
     </nav>
 
@@ -372,7 +376,7 @@
             if (visibleCount === 0) {
                 emptyMsg.classList.remove('hidden');
             } else {
-                emptyMsg.classList.add('hidden');
+                emptyMsg.className = "text-xs font-semibold text-red-500 tracking-wide hidden";
             }
         }
 
@@ -413,18 +417,17 @@
                 const mTab = document.getElementById(`mobile-tab-${tab}`);
                 
                 if (tab === category) {
-                    dTab.className = "text-black underline underline-offset-4 decoration-2 transition duration-300";
-                    mTab.className = "text-black border-b-2 border-black pb-1 whitespace-nowrap transition duration-300";
+                    if(dTab) dTab.className = "text-black underline underline-offset-4 decoration-2 transition duration-300";
+                    if(mTab) mTab.className = "text-black border-b-2 border-black pb-1 whitespace-nowrap transition duration-300";
                 } else {
-                    dTab.className = "text-gray-400 hover:text-black transition duration-300";
-                    mTab.className = "text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300";
+                    if(dTab) dTab.className = "text-gray-400 hover:text-black transition duration-300";
+                    if(mTab) mTab.className = "text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300";
                 }
             });
 
             applyFilterAndSearch();
         }
 
-        // UPDATE: Ditambahkan perintah location.reload() agar halaman ter-refresh total
         function resetFilters() {
             const desktopInput = document.getElementById('search-input-desktop');
             const mobileInput = document.getElementById('search-input-mobile');
