@@ -5,125 +5,124 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CROCHER | Made with love</title>
     
-    <link rel="icon" type="image/png" href="https://images.prodia.com/image_generation_content/1">
+    <link rel="icon" type="image/png" href="images/Crocher Project.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; }
-        /* Menyembunyikan scrollbar bawaan browser untuk menu mobile scroll agar tetap estetik */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-white text-black relative">
+<body class="bg-white text-black relative antialiased">
 
-    <nav class="border-b border-gray-200 sticky top-0 bg-white z-50">
+    <nav class="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur-md z-50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
-            <div class="text-xl font-black tracking-widest uppercase cursor-pointer shrink-0" onclick="resetFilters()">
+            <div class="text-xl font-black tracking-widest uppercase cursor-pointer shrink-0 transition hover:opacity-70" onclick="resetFilters()">
                 CROC<span class="text-gray-500">HER</span>
             </div>
             
             <div class="hidden md:flex space-x-8 font-bold text-xs tracking-wider uppercase shrink-0">
-                <button onclick="filterCategory('all')" id="tab-all" class="text-black underline underline-offset-4 decoration-2">ALL PRODUCTS</button>
-                <button onclick="filterCategory('tas')" id="tab-tas" class="text-gray-400 hover:text-black transition">CARRYWEAR</button>
-                <button onclick="filterCategory('pakaian')" id="tab-pakaian" class="text-gray-400 hover:text-black transition">WEARABLES</button>
-                <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition">BAG CHARMS</button>
+                <button onclick="filterCategory('all')" id="tab-all" class="text-black underline underline-offset-4 decoration-2 transition duration-300">ALL PRODUCTS</button>
+                <button onclick="filterCategory('tas')" id="tab-tas" class="text-gray-400 hover:text-black transition duration-300">CARRYWEAR</button>
+                <button onclick="filterCategory('pakaian')" id="tab-pakaian" class="text-gray-400 hover:text-black transition duration-300">WEARABLES</button>
+                <button onclick="filterCategory('aksesoris')" id="tab-aksesoris" class="text-gray-400 hover:text-black transition duration-300">BAG CHARMS</button>
             </div>
             
             <div class="flex items-center justify-end gap-2 sm:gap-4 flex-1 md:flex-initial md:w-64">
                 
                 <div class="hidden md:block w-full relative">
                     <input type="text" id="search-input-desktop" oninput="searchProducts('desktop')" placeholder="Search product..." 
-                        class="w-full bg-gray-100 text-xs font-medium uppercase tracking-wider pl-3 pr-10 py-2 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
-                    <div class="absolute right-3 top-2.5 text-gray-400 pointer-events-none">
+                        class="w-full bg-gray-50 text-xs font-medium pl-4 pr-10 py-2.5 border border-transparent focus:border-black/20 focus:bg-white focus:outline-none transition duration-300 rounded-full">
+                    <div class="absolute right-3.5 top-3 text-gray-400 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                 </div>
 
-                <button onclick="openMobileSearch()" class="block md:hidden text-black hover:text-gray-600 focus:outline-none p-1.5 transition">
+                <button onclick="openMobileSearch()" class="block md:hidden text-black hover:bg-gray-100 rounded-full p-2 transition duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                 </button>
 
-                <button onclick="toggleBag()" class="relative text-black hover:text-gray-600 focus:outline-none p-1.5 shrink-0 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <button onclick="toggleBag()" class="relative text-black hover:bg-gray-100 rounded-full p-2 shrink-0 transition duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <span id="bag-count" class="absolute top-0 right-0 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center tracking-tighter">
+                    <span id="bag-count" class="absolute top-1 right-1 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center tracking-tighter">
                         0
                     </span>
                 </button>
             </div>
 
-            <div id="mobile-search-overlay" class="fixed inset-x-0 top-0 bg-white h-16 px-4 hidden flex items-center justify-between gap-3 border-b border-gray-200 z-50 md:hidden">
+            <div id="mobile-search-overlay" class="fixed inset-x-0 top-0 bg-white h-16 px-4 hidden flex items-center justify-between gap-3 border-b border-gray-100 z-50 md:hidden">
                 <div class="flex-1 relative">
-                    <input type="text" id="search-input-mobile" oninput="searchProducts('mobile')" placeholder="SEARCH PRODUCT..." 
-                        class="w-full bg-gray-100 text-xs font-bold uppercase tracking-wider pl-10 pr-4 py-2.5 border border-transparent focus:border-black focus:bg-white focus:outline-none transition rounded-none">
-                    <div class="absolute left-3 top-3 text-gray-400 pointer-events-none">
+                    <input type="text" id="search-input-mobile" oninput="searchProducts('mobile')" placeholder="Search product..." 
+                        class="w-full bg-gray-50 text-xs font-medium pl-10 pr-4 py-2.5 border border-transparent focus:border-black/20 focus:bg-white focus:outline-none transition duration-300 rounded-full">
+                    <div class="absolute left-3.5 top-3.5 text-gray-400 pointer-events-none">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                 </div>
-                <button onclick="closeMobileSearch()" class="text-sm font-bold text-black p-1 hover:text-gray-600 transition focus:outline-none">
+                <button onclick="closeMobileSearch()" class="text-sm font-bold text-black p-2 hover:bg-gray-100 rounded-full transition duration-300">
                     ✕
                 </button>
             </div>
 
         </div>
 
-        <div class="md:hidden flex space-x-6 overflow-x-auto px-4 py-3 bg-gray-50 border-t border-gray-100 no-scrollbar font-bold text-[10px] tracking-wider uppercase">
-            <button onclick="filterCategory('all')" id="mobile-tab-all" class="text-black border-b-2 border-black pb-1 whitespace-nowrap">ALL PRODUCTS</button>
-            <button onclick="filterCategory('tas')" id="mobile-tab-tas" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap">CARRYWEAR</button>
-            <button onclick="filterCategory('pakaian')" id="mobile-tab-pakaian" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap">WEARABLES</button>
-            <button onclick="filterCategory('aksesoris')" id="mobile-tab-aksesoris" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap">BAG CHARMS</button>
+        <div class="md:hidden flex space-x-6 overflow-x-auto px-4 py-3 bg-gray-50/50 border-t border-gray-100 no-scrollbar font-bold text-[10px] tracking-wider uppercase">
+            <button onclick="filterCategory('all')" id="mobile-tab-all" class="text-black border-b-2 border-black pb-1 whitespace-nowrap transition duration-300">ALL PRODUCTS</button>
+            <button onclick="filterCategory('tas')" id="mobile-tab-tas" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">CARRYWEAR</button>
+            <button onclick="filterCategory('pakaian')" id="mobile-tab-pakaian" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">WEARABLES</button>
+            <button onclick="filterCategory('aksesoris')" id="mobile-tab-aksesoris" class="text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300">BAG CHARMS</button>
         </div>
     </nav>
 
-    <div id="bag-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-200">
-        <div class="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
+    <div id="bag-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-gray-100">
+        <div class="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
             <h3 class="font-black text-sm tracking-widest uppercase">Shopping Bag</h3>
-            <button onclick="toggleBag()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:underline">CLOSE [X]</button>
+            <button onclick="toggleBag()" class="text-xs font-bold uppercase tracking-wider text-red-500 hover:text-red-700 transition duration-300">Close [X]</button>
         </div>
         
         <div id="bag-items" class="flex-1 p-6 overflow-y-auto space-y-4">
-            <p id="empty-bag-text" class="text-gray-400 text-xs tracking-wider uppercase text-center mt-10">Your bag is currently empty.</p>
+            <p id="empty-bag-text" class="text-gray-400 text-xs tracking-wide text-center mt-10">Your bag is currently empty.</p>
         </div>
 
-        <div class="p-6 border-t border-gray-200 bg-gray-50">
+        <div class="p-6 border-t border-gray-100 bg-gray-50/50">
             <div class="flex justify-between items-center font-black text-sm tracking-wider uppercase mb-4">
                 <span>Total:</span>
                 <span id="bag-total">Rp 0</span>
             </div>
-            <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition text-center block">
+            <button onclick="checkoutWhatsApp()" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-gray-800 shadow-lg hover:shadow-xl transition duration-300 text-center block">
                 Pre-Order Via WhatsApp
             </button>
         </div>
     </div>
 
-    <div id="product-modal" class="fixed inset-0 bg-black bg-opacity-60 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl rounded-sm overflow-hidden shadow-2xl relative flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-black font-bold text-sm z-10 bg-white bg-opacity-80 rounded-full p-1 px-2">✕</button>
-            <div class="w-full md:w-1/2 bg-gray-100 aspect-square">
+    <div id="product-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition-all duration-300">
+        <div class="bg-white w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl relative flex flex-col md:flex-row max-h-[90vh] md:max-h-none overflow-y-auto transform scale-95 transition-transform duration-300">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-500 hover:text-black hover:bg-gray-100 font-bold text-sm z-10 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center transition duration-300">✕</button>
+            <div class="w-full md:w-1/2 bg-gray-50 aspect-square">
                 <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
             </div>
-            <div class="w-full md:w-1/2 p-6 flex flex-col justify-between">
+            <div class="w-full md:w-1/2 p-8 flex flex-col justify-between">
                 <div>
                     <span id="modal-category" class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Category</span>
-                    <h2 id="modal-title" class="font-black text-xl uppercase mt-1 tracking-tight">Product Name</h2>
+                    <h2 id="modal-title" class="font-bold text-xl text-gray-900 mt-1 tracking-tight">Product Name</h2>
                     <div id="modal-price" class="font-black text-lg text-black mt-2">Rp 0</div>
-                    <hr class="my-4 border-gray-200">
-                    <h4 class="text-xs font-bold uppercase tracking-wider text-gray-600 mb-2">Deskripsi Produk:</h4>
-                    <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed uppercase tracking-wide">Detail deskripsi produk.</p>
+                    <hr class="my-5 border-gray-100">
+                    <h4 class="text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-2">Deskripsi Produk:</h4>
+                    <p id="modal-desc" class="text-xs text-gray-600 leading-relaxed tracking-wide">Detail deskripsi produk.</p>
                 </div>
-                <div class="mt-6 grid grid-cols-1 gap-2">
-                    <button id="modal-add-btn" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3 hover:bg-gray-800 transition">+ Add To Bag</button>
-                    <a id="modal-buy-btn" href="" target="_blank" class="w-full text-center border-2 border-black text-xs font-bold tracking-widest uppercase py-2.5 hover:bg-black hover:text-white transition">Direct Buy</a>
+                <div class="mt-8 grid grid-cols-1 gap-2.5">
+                    <button id="modal-add-btn" class="w-full bg-black text-white text-xs font-bold tracking-widest uppercase py-3.5 rounded-xl hover:bg-gray-800 shadow-md hover:shadow-lg transition duration-300">+ Add To Bag</button>
+                    <a id="modal-buy-btn" href="" target="_blank" class="w-full text-center border-2 border-black rounded-xl text-xs font-bold tracking-widest uppercase py-3 hover:bg-black hover:text-white transition duration-300">Direct Buy</a>
                 </div>
             </div>
         </div>
@@ -137,82 +136,82 @@
         <div class="absolute inset-0 bg-black opacity-40"></div>
         <div class="relative w-full max-w-none mx-auto px-8 text-center text-white z-10">
             <h1 class="text-3xl md:text-5xl font-black tracking-tighter uppercase mb-4 drop-shadow-lg">KNITTED WITH JOY, COLORED WITH LOVE.</h1>
-            <p class="text-sm md:text-md tracking-widest uppercase font-bold drop-shadow-md">COLOR YOUR DAY WITH CUTE STITCHES</p>
+            <p class="text-xs md:text-sm tracking-widest font-medium drop-shadow-md text-gray-200">Color your day with cute stitches</p>
         </div>
     </section>
 
     <main id="katalog" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <h2 id="katalog-title" class="text-2xl font-black tracking-tight uppercase">ALL PRODUCTS</h2>
-            <p id="search-empty-msg" class="text-xs font-bold text-red-500 uppercase tracking-widest hidden">Produk tidak ditemukan</p>
+            <p id="search-empty-msg" class="text-xs font-semibold text-red-500 tracking-wide hidden">Produk tidak ditemukan</p>
         </div>
         
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8" id="product-grid">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10" id="product-grid">
             
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="tas" data-name="wallet">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-100 hover:shadow-xl hover:shadow-gray-100/50 rounded-2xl p-3 transition duration-300" data-category="tas" data-name="wallet">
                 <div class="cursor-pointer" onclick="openModal('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg', 'Carrywear', 'Dompet rajut mini yang estetik dan dibuat handmade secara presisi.')">
-                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="bg-gray-50 aspect-square overflow-hidden rounded-xl mb-3.5">
+                        <img src="https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg" alt="Tas Crochet" class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500">
                     </div>
-                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Carrywear</div>
-                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Wallet</h3>
+                    <div class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Carrywear</div>
+                    <h3 class="font-bold text-sm mt-0.5 product-title text-gray-900 group-hover:text-black transition">Wallet</h3>
                 </div>
                 <div class="mt-4">
-                    <div class="font-black text-sm mb-3">Rp 189.000</div>
+                    <div class="font-black text-sm mb-3 text-gray-900">Rp 189.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToBag('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
-                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Wallet." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
+                        <button onclick="addToBag('Wallet', 189000, 'https://i.pinimg.com/236x/a5/0b/50/a50b50c7b99004ed8272c38b1829573f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2.5 rounded-lg hover:bg-gray-800 transition duration-300">+ Add To Bag</button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Wallet." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-2 rounded-lg hover:bg-black hover:text-white transition duration-300">Direct Buy</a>
                     </div>
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="pakaian" data-name="knit cardigan">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-100 hover:shadow-xl hover:shadow-gray-100/50 rounded-2xl p-3 transition duration-300" data-category="pakaian" data-name="knit cardigan">
                 <div class="cursor-pointer" onclick="openModal('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg', 'Wearables', 'Cardigan rajut premium dengan jahitan super rapi.')">
-                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="bg-gray-50 aspect-square overflow-hidden rounded-xl mb-3.5">
+                        <img src="https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg" alt="Cardigan Crochet" class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500">
                     </div>
-                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Wearables</div>
-                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Knit Cardigan</h3>
+                    <div class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Wearables</div>
+                    <h3 class="font-bold text-sm mt-0.5 product-title text-gray-900 group-hover:text-black transition">Knit Cardigan</h3>
                 </div>
                 <div class="mt-4">
-                    <div class="font-black text-sm mb-3">Rp 349.000</div>
+                    <div class="font-black text-sm mb-3 text-gray-900">Rp 349.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToBag('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
-                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Knit%20Cardigan." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
+                        <button onclick="addToBag('Knit Cardigan', 349000, 'https://i.pinimg.com/1200x/49/e9/30/49e9306971eca7faacc55eda211e8aec.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2.5 rounded-lg hover:bg-gray-800 transition duration-300">+ Add To Bag</button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Knit%20Cardigan." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-2 rounded-lg hover:bg-black hover:text-white transition duration-300">Direct Buy</a>
                     </div>
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris" data-name="dino bookmark">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-100 hover:shadow-xl hover:shadow-gray-100/50 rounded-2xl p-3 transition duration-300" data-category="aksesoris" data-name="dino bookmark">
                 <div class="cursor-pointer" onclick="openModal('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg', 'Bag Charms', 'Pembatas buku rajutan berbentuk dinosaurus menggemaskan.')">
-                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="bg-gray-50 aspect-square overflow-hidden rounded-xl mb-3.5">
+                        <img src="https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg" alt="Dino Bookmark" class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500">
                     </div>
-                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Dino Bookmark</h3>
+                    <div class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Bag Charms</div>
+                    <h3 class="font-bold text-sm mt-0.5 product-title text-gray-900 group-hover:text-black transition">Dino Bookmark</h3>
                 </div>
                 <div class="mt-4">
-                    <div class="font-black text-sm mb-3">Rp 125.000</div>
+                    <div class="font-black text-sm mb-3 text-gray-900">Rp 125.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToBag('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
-                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Dino%20Bookmark." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
+                        <button onclick="addToBag('Dino Bookmark', 125000, 'https://i.pinimg.com/1200x/65/d6/a2/65d6a23a1ca30488b6c166306b5065ef.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2.5 rounded-lg hover:bg-gray-800 transition duration-300">+ Add To Bag</button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Dino%20Bookmark." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-2 rounded-lg hover:bg-black hover:text-white transition duration-300">Direct Buy</a>
                     </div>
                 </div>
             </div>
 
-            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-200 p-2 transition" data-category="aksesoris" data-name="flower keychain">
+            <div class="product-item group relative flex flex-col justify-between border border-transparent hover:border-gray-100 hover:shadow-xl hover:shadow-gray-100/50 rounded-2xl p-3 transition duration-300" data-category="aksesoris" data-name="flower keychain">
                 <div class="cursor-pointer" onclick="openModal('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg', 'Bag Charms', 'Gantungan kunci berbentuk bunga rajut yang manis dan imut.')">
-                    <div class="bg-gray-100 aspect-square overflow-hidden mb-3">
-                        <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                    <div class="bg-gray-50 aspect-square overflow-hidden rounded-xl mb-3.5">
+                        <img src="https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg" alt="Gantungan Kunci" class="w-full h-full object-cover group-hover:scale-[1.03] transition duration-500">
                     </div>
-                    <div class="text-xs font-bold tracking-wider text-gray-500 uppercase">Bag Charms</div>
-                    <h3 class="font-bold text-sm uppercase mt-1 product-title">Flower Keychain</h3>
+                    <div class="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Bag Charms</div>
+                    <h3 class="font-bold text-sm mt-0.5 product-title text-gray-900 group-hover:text-black transition">Flower Keychain</h3>
                 </div>
                 <div class="mt-4">
-                    <div class="font-black text-sm mb-3">Rp 45.000</div>
+                    <div class="font-black text-sm mb-3 text-gray-900">Rp 45.000</div>
                     <div class="grid grid-cols-1 gap-2">
-                        <button onclick="addToBag('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2 hover:bg-gray-800 transition">+ Add To Bag</button>
-                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Flower%20Keychain." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-1.5 hover:bg-black hover:text-white transition">Direct Buy</a>
+                        <button onclick="addToBag('Flower Keychain', 45000, 'https://i.pinimg.com/736x/ed/86/e0/ed86e0fb59abdcca4ea6b8bbf6651c5f.jpg')" class="bg-black text-white text-[10px] font-bold tracking-widest uppercase py-2.5 rounded-lg hover:bg-gray-800 transition duration-300">+ Add To Bag</button>
+                        <a href="https://wa.me/6285659522540?text=Halo%20Crocher,%20saya%20tertarik%20untuk%20pre-order%20Flower%20Keychain." target="_blank" class="text-center border-2 border-black text-[10px] font-bold tracking-widest uppercase py-2 rounded-lg hover:bg-black hover:text-white transition duration-300">Direct Buy</a>
                     </div>
                 </div>
             </div>
@@ -220,8 +219,8 @@
         </div>
     </main>
 
-    <footer class="bg-black text-white py-8 mt-20 text-center text-xs tracking-widest uppercase">
-        <p>© 2026 CROCHER INDONESIA. ALL RIGHTS RESERVED.</p>
+    <footer class="bg-black text-white py-12 mt-20 text-center text-xs tracking-widest uppercase border-t border-gray-900">
+        <p class="opacity-80">© 2026 CROCHER INDONESIA. ALL RIGHTS RESERVED.</p>
     </footer>
 
     <script>
@@ -247,17 +246,31 @@
             let textWA = encodeURIComponent(`Halo Crocher, saya tertarik untuk pre-order ${name}.`);
             buyBtn.href = `https://wa.me/6285659522540?text=${textWA}`;
 
-            document.getElementById('product-modal').classList.remove('hidden');
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.querySelector('.transform').classList.remove('scale-95');
+                modal.querySelector('.transform').classList.add('scale-100');
+            }, 10);
         }
 
-        function closeModal() { document.getElementById('product-modal').classList.add('hidden'); }
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.querySelector('.transform').classList.remove('scale-100');
+            modal.querySelector('.transform').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
+        }
 
         window.onclick = function(event) {
             const modal = document.getElementById('product-modal');
             if (event.target === modal) closeModal();
         }
 
-        function toggleBag() { document.getElementById('bag-sidebar').classList.toggle('translate-x-full'); }
+        function toggleBag() {
+            document.getElementById('bag-sidebar').classList.toggle('translate-x-full');
+        }
 
         function addToBag(name, price, img) {
             const itemIndex = bag.findIndex(item => item.name === name);
@@ -297,18 +310,19 @@
                 const subTotal = item.price * item.qty;
                 totalPrice += subTotal;
 
+                // Modifikasi item keranjang agar menggunakan Title Case yang halus
                 const itemHTML = `
-                    <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+                    <div class="flex items-center justify-between border-b border-gray-50 pb-3.5">
                         <div class="flex items-center space-x-3">
-                            <img src="${item.img}" class="w-12 h-12 object-cover bg-gray-100 border">
+                            <img src="${item.img}" class="w-12 h-12 object-cover bg-gray-50 border border-gray-100 rounded-lg">
                             <div>
-                                <h4 class="font-bold text-xs uppercase">${item.name}</h4>
-                                <p class="text-[11px] text-gray-500">${item.qty}x @ Rp ${item.price.toLocaleString('id-ID')}</p>
+                                <h4 class="font-bold text-xs text-gray-900">${item.name}</h4>
+                                <p class="text-[11px] text-gray-400 mt-0.5">${item.qty}x @ Rp ${item.price.toLocaleString('id-ID')}</p>
                             </div>
                         </div>
                         <div class="text-right">
-                            <span class="block font-black text-xs">Rp ${subTotal.toLocaleString('id-ID')}</span>
-                            <button onclick="removeItem('${item.name}')" class="text-[10px] text-red-500 hover:underline uppercase mt-1">remove</button>
+                            <span class="block font-black text-xs text-gray-900">Rp ${subTotal.toLocaleString('id-ID')}</span>
+                            <button onclick="removeItem('${item.name}')" class="text-[10px] text-red-400 hover:text-red-600 transition uppercase font-bold mt-1">Remove</button>
                         </div>
                     </div>
                 `;
@@ -400,11 +414,11 @@
                 const mTab = document.getElementById(`mobile-tab-${tab}`);
                 
                 if (tab === category) {
-                    dTab.className = "text-black underline underline-offset-4 decoration-2";
-                    mTab.className = "text-black border-b-2 border-black pb-1 whitespace-nowrap";
+                    dTab.className = "text-black underline underline-offset-4 decoration-2 transition duration-300";
+                    mTab.className = "text-black border-b-2 border-black pb-1 whitespace-nowrap transition duration-300";
                 } else {
-                    dTab.className = "text-gray-400 hover:text-black transition";
-                    mTab.className = "text-gray-400 hover:text-black pb-1 whitespace-nowrap";
+                    dTab.className = "text-gray-400 hover:text-black transition duration-300";
+                    mTab.className = "text-gray-400 hover:text-black pb-1 whitespace-nowrap transition duration-300";
                 }
             });
 
